@@ -1,1 +1,3 @@
-# Cryptnology Frontend Base DApp
+# NFT Marketplace
+
+## NFT marketplace where you can create, buy and sell NFTs
