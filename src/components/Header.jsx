@@ -18,7 +18,7 @@ const Header = ({
   };
 
   return (
-    <Navbar collapseOnSelect expand='sm' fixed='top'>
+    <Navbar collapseOnSelect expand='md' fixed='top'>
       <Container fluid={'xl'}>
         <Navbar.Brand
           href='http://www.cryptnology.dev'
@@ -52,10 +52,19 @@ const Header = ({
                 href={blockchainExplorerURL(account)}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='btn btn-sm btn-primary'
+                className='btn btn-sm btn-primary me-4'
               >
                 {account.slice(0, 5) + '...' + account.slice(38, 42)}
               </a>
+              <Button
+                variant='dark'
+                onClick={() => {
+                  window.location.reload();
+                }}
+                className=' btn-sm'
+              >
+                Disconnect
+              </Button>
             </>
           ) : (
             <Button
