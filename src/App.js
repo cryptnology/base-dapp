@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { connect } from './redux/blockchain/blockchainActions';
+import { fetchData } from './redux/data/dataActions';
+// import { create } from 'ipfs-http-client';
+import Header from './components/Header';
+import Content from './components/Content';
+import * as s from './styles/globalStyles';
 import './App.css';
 
 function App() {
+  const dispatch = useDispatch();
+  const blockchain = useSelector(state => state.blockchain);
+  const data = useSelector(state => state.data);
+
+  useEffect(() => {
+    if (blockchain.account !== '' && blockchain.smartContract !== null) {
+      dispatch(fetchData(blockchain.account));
+    }
+  }, [blockchain.smartContract, blockchain.account, dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <s.Screen>
+        <Header
+          account={blockchain.account}
+          smartContract={blockchain.smartContract}
+          dispatch={dispatch}
+          connect={connect}
+          network={blockchain.network}
+          balance={blockchain.balance}
+        />
+        <Content
+          account={blockchain.account}
+          smartContract={blockchain.smartContract}
+          errorMessage={blockchain.errorMsg}
+          data={data}
+        />
+      </s.Screen>
+    </>
   );
 }
 
