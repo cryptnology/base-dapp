@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import { Container, Navbar, Button, Nav } from 'react-bootstrap';
 import logo from '../images/cryptnology.jpeg';
 
@@ -39,10 +40,12 @@ const Header = ({
           {account && smartContract ? (
             <>
               <Nav className='me-auto'>
-                <Nav.Link href='#home'>Home</Nav.Link>
-                <Nav.Link href='#link'>Link</Nav.Link>
-                <Nav.Link href='#link'>Link</Nav.Link>
-                <Nav.Link href='#link'>Link</Nav.Link>
+                <NavLink className='nav-item nav-link' to='/home'>
+                  Home
+                </NavLink>
+                <NavLink className='nav-item nav-link' to='/page'>
+                  Page
+                </NavLink>
               </Nav>
 
               <Nav className='ms-auto'>
