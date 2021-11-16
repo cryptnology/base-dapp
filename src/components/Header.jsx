@@ -1,15 +1,7 @@
-import { NavLink } from 'react-router-dom';
-import { Container, Navbar, Button, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import logo from '../images/cryptnology.jpeg';
 
-const Header = ({
-  account,
-  smartContract,
-  dispatch,
-  connect,
-  network,
-  balance,
-}) => {
+const Header = ({ account, dispatch, connect, network, balance }) => {
   const blockchainExplorerURL = account => {
     if (network === 'Rinkeby') {
       return `https://rinkeby.etherscan.io/address/${account}`;
@@ -18,82 +10,150 @@ const Header = ({
     } else return `https://mumbai.polygonscan.com/address/${account}`;
   };
 
+  const menu = e => {
+    e.preventDefault();
+    const menu = document.querySelector('#menu');
+
+    if (menu.classList.contains('hidden')) menu.classList.remove('hidden');
+    else menu.classList.add('hidden');
+  };
+
   return (
-    <Navbar collapseOnSelect expand='lg' fixed='top'>
-      <Container fluid={'xl'}>
-        <img
-          alt='logo'
-          src={logo}
-          width='25'
-          height='25'
-          className='d-inline-block align-top me-3'
-        />
-        <Navbar.Brand
-          href='http://www.cryptnology.dev'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          cryptnology.dev
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-        <Navbar.Collapse id='responsive-navbar-nav'>
-          {account && smartContract ? (
-            <>
-              <Nav className='me-auto'>
-                <NavLink className='nav-item nav-link' to='/home'>
-                  Home
-                </NavLink>
-                <NavLink className='nav-item nav-link' to='/page'>
-                  Page
-                </NavLink>
-              </Nav>
-
-              <Nav className='ms-auto'>
-                <Navbar.Text className='me-4'>{network}</Navbar.Text>
-                <Navbar.Text className='me-4'>
-                  {balance} {network === 'Rinkeby' ? 'ETH' : 'MATIC'}
-                </Navbar.Text>
-              </Nav>
-
-              <div className='text-center'>
+    <div className='bg-themeOrange text-themeBlack'>
+      <div className='container mx-auto px-4'>
+        {account ? (
+          <nav className='py-5'>
+            <div className='flex items-center'>
+              <div className='cursor-pointer lg:hidden mr-4'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='h-6 w-6 hover:text-themeYellow'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                  onClick={e => menu(e)}
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M4 6h16M4 12h16M4 18h16'
+                  />
+                </svg>
+              </div>
+              <img
+                className='mr-3 rounded-full h-7 w-7 hidden lg:inline-flex'
+                alt='logo'
+                src={logo}
+              />
+              <h1 className=''>
                 <a
-                  href={blockchainExplorerURL(account)}
+                  className='mr-3 hover:text-themeYellow uppercase font-bold'
+                  href='http://www.cryptnology.dev'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='btn btn-sm btn-primary me-4'
                 >
-                  {account.slice(0, 5) + '...' + account.slice(38, 42)}
+                  Cryptnology.dev
                 </a>
-                <Button
-                  variant='dark'
-                  onClick={() => {
-                    window.location.reload();
-                  }}
-                  className=' btn-sm '
-                >
-                  Disconnect
-                </Button>
+              </h1>
+              <div className='hidden lg:inline-flex'>
+                <ul className='flex'>
+                  <li className='mr-3'>
+                    <Link className='hover:text-themeYellow' to='/home'>
+                      <span>Home</span>
+                    </Link>
+                  </li>
+                  <li className='mr-3 hover:text-themeYellow'>
+                    <Link to='/page'>
+                      <span>Page</span>
+                    </Link>
+                  </li>
+                </ul>
               </div>
-            </>
-          ) : (
-            <Nav className='ms-auto'>
-              <div className='text-center'>
-                <Button
-                  variant='primary'
-                  onClick={e => {
-                    e.preventDefault();
-                    dispatch(connect());
-                  }}
-                  className=' btn-sm me-auto'
+              <ul className='flex items-center ml-auto'>
+                <li className='mr-3 hidden lg:inline-flex'>{network}</li>
+                <li className='mr-1 hidden sm:inline-flex'>{balance}</li>
+                <li className='mr-3 hidden sm:inline-flex font-bold'>
+                  {network === 'Rinkeby' ? 'ETH' : 'MATIC'}
+                </li>
+                <li>
+                  <a
+                    href={blockchainExplorerURL(account)}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='btn border-themeBlack border-4 mr-3 hover:bg-themeBlack hover:text-themeOrange'
+                  >
+                    {account.slice(0, 5) + '...' + account.slice(38, 42)}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={'#/'}
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                    className='btn border-themeBlack border-4 hover:bg-themeBlack hover:text-themeOrange'
+                  >
+                    Disconnect
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className='hidden lg:hidden' id='menu'>
+              <ul className='flex justify-center'>
+                <li className=' mr-4 mt-4' onClick={e => menu(e)}>
+                  <Link className='hover:text-themeYellow' to='/home'>
+                    <span>Home</span>
+                  </Link>
+                </li>
+                <li
+                  className='mr-4 mt-4 hover:text-themeYellow'
+                  onClick={e => menu(e)}
                 >
-                  Connect Wallet
-                </Button>
-              </div>
-            </Nav>
-          )}
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+                  <Link to='/page'>
+                    <span>Page</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        ) : (
+          <nav className='py-5'>
+            <div className='flex items-center'>
+              <img
+                className='mr-3 rounded-full h-7 w-7'
+                alt='logo'
+                src={logo}
+              />
+              <h1>
+                <a
+                  href='http://www.cryptnology.dev'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='hover:text-themeYellow uppercase font-bold'
+                >
+                  Cryptnology.dev
+                </a>
+              </h1>
+              <ul className='flex ml-auto'>
+                <li>
+                  <a
+                    href={'#/'}
+                    onClick={e => {
+                      e.preventDefault();
+                      dispatch(connect());
+                    }}
+                    className=' btn border-themeBlack border-4 hover:bg-themeBlack hover:text-themeOrange'
+                  >
+                    Connect
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        )}
+      </div>
+    </div>
   );
 };
 

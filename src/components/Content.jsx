@@ -1,12 +1,13 @@
-import * as s from '../styles/globalStyles';
-
 const Content = ({ account, smartContract, errorMessage, data }) => {
   return (
-    <s.Container flex={1} ai={'center'} jc={'center'}>
-      <s.TextTitle>{data.name}</s.TextTitle>
-      <s.SpacerMedium />
-      <s.TextSubTitle>{smartContract._address}</s.TextSubTitle>
-    </s.Container>
+    <div className='flex justify-center items-center h-screen'>
+      <div className='text-center'>
+        <h1 className='text-2xl text-themeOrange'>
+          {' '}
+          Contract Name: {data.name}
+        </h1>
+      </div>
+    </div>
   );
 };
 

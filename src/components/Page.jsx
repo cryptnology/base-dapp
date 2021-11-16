@@ -1,10 +1,10 @@
-import * as s from '../styles/globalStyles';
-
 const Page = () => {
   return (
-    <s.Container flex={1} ai={'center'} jc={'center'}>
-      <h1>Page</h1>
-    </s.Container>
+    <div className='flex justify-center items-center h-screen'>
+      <div className='text-center'>
+        <h1 className='text-2xl text-themeOrange'>Page Component</h1>
+      </div>
+    </div>
   );
 };
 
