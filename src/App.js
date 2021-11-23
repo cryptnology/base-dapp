@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Page from './components/Page';
 import Connect from './components/Connect';
 import Content from './components/Content';
+import Footer from './components/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function App() {
         network={blockchain.network}
         balance={blockchain.balance}
       />
-      <div className='bg-themeDarkGrey'>
+      <div>
         {blockchain.account === '' || blockchain.smartContract === null ? (
           <Connect errorMsg={blockchain.errorMsg} />
         ) : (
@@ -48,6 +49,9 @@ function App() {
             <Redirect from='/' exact to='/home' />
           </Switch>
         )}
+        <div className='pt-28'>
+          <Footer />
+        </div>
       </div>
     </div>
   );

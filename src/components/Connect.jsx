@@ -1,6 +1,6 @@
 const Connect = ({ errorMsg }) => {
   return (
-    <div className='flex justify-center items-center h-screen'>
+    <div className='flex justify-center items-center mt-96'>
       {errorMsg !== '' ? (
         <div className='text-center'>
           <h1 className='text-2xl text-themeOrange'>
